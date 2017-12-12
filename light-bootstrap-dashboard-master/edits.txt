@@ -1,0 +1,20 @@
+new teahces table
+
+in class table chenged day varchar(1) into varchar(3)-> for better represenation
+
+Class ID (L0001)
+
+takes : //there should be a column for class type  A001
+
+
+module_registration.php
+student.php
+fees.php
+setting.php
+
+<?php
+include("php/dbconnect.php");
+include("php/checklogin.php");
+
+
+?>

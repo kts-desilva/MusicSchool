@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Daily UI - Day 1 Sign In</title>
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="top">
+			<center><img src="assets/img/150956103493059.png" height="275" ></center>
+
+			<div class="login-box animated fadeInUp">
+				<div class="box-header">
+					<h2>Log In</h2>
+				</div>
+				<label for="username">Username</label>
+				<br/>
+				<input type="text" id="username">
+				<br/>
+				<label for="password">Password</label>
+				<br/>
+				<input type="password" id="password">
+				<br/>
+				<button type="submit" onclick="signin()">Sign In</button>
+				<br/>
+				<a href="#"><p class="small">Forgot your password?</p></a>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type ="text/javascript" language="javascript">
+	$(document).ready(function () {
+    	$('#logo').addClass('animated fadeInDown');
+    	$("input:text:visible:first").focus();
+        $('label[for="username"]').addClass('selected');
+        $('label[for="password"]').addClass('selected');
+	});
+	$('#username').focus(function() {
+		$('label[for="username"]').addClass('selected');
+	});
+
+	$('#password').focus(function() {
+		$('label[for="password"]').addClass('selected');
+	});
+	
+	function signin() {
+        var id = document.getElementById('username').value;
+        var pw = document.getElementById('password').value;
+
+        var myData = {"id": id};
+        $.ajax({
+			url:"http://localhost/daily_ui_day1_sign_in/PHP/signin.php",
+            type: "POST",
+            data: myData,
+            success: function (res) {
+
+                if (res=='false'){
+                    alert('no such user..');
+				}else{
+                    var ar=res.split("|");
+                    alert(ar[1]=='C');
+                    if (ar[0]==pw){
+                        alert(ar[1]=='C');
+                        if (ar[1]=='T'){
+                            sessionStorage.setItem("ID",id);
+							alert('Welcome Teacher');
+                            window.location.href="http://localhost/light-bootstrap-dashboard-master/teacher_dashboard.html";
+						}else if(ar[1]=='C'){
+							sessionStorage.setItem("ID",id);
+                            alert('Welcome Clerk');
+							window.location.href="http://localhost/light-bootstrap-dashboard-master/clerk_dashboard.html";
+						}else{
+						    alert("no user");
+						}
+					}else{
+                        alert("Incorrect Password");
+					}
+				}
+            }
+
+        });
+    }
+
+</script>
+
+</html>
